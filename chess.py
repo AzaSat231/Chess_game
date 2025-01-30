@@ -239,141 +239,129 @@ def main():
 
     game_running = 0         #Statement when one of the player will lose or will be a draw
     flag = 0
-    flag_white_player = 0
+    flag_player_white = 0
 
     while game_running != 1:
+        flag_player_white = 0
+        flag_player_black = 0
+
         #PLAYER WHITE move
-        print("Player White chose a figure:")
-        while flag != 1:
-            whiteX = int(input("Input X:"))
-            if  whiteX >= 1 and whiteX <= 8:
-                flag = 1
-            else:
-                print("Oh oh there is no such coordinate")
-
-        flag = 0
-
-        while flag != 1:
-            whiteY = int(input("Input Y:"))
-            if  whiteY >= 1 and whiteY <= 8:
-                flag = 1
-            else:
-                print("Oh oh there is no such coordinate")
-        
-        flag = 0
-        
-        whiteFigures = Player_White.figures
-        white_figure_chosen = None
-        for figure in whiteFigures:
-            if figure[1] == whiteY and figure[2] == whiteX:
-                print(f"You chose: {figure[0]}")
-                white_figure_chosen = figure
-                break
-        
-
-        #Choose the place where to put the figure that was chosen
-        if not white_figure_chosen:
-            print("Oh no there is no such figure")
-        else:
-            print("Player White chose a place to put this figure:")
+        while flag_player_white != 1:
+            print("Player White chose a figure:")
             while flag != 1:
-                white_X_Move = int(input("Input X:"))
-                if  white_X_Move >= 1 and white_X_Move <= 8:
-                    flag = 1
-                else:
-                    print("Oh oh there is no such coordinate")
-
-            flag = 0
-
-            while flag != 1:
-                white_Y_Move = int(input("Input Y:"))
-                if  white_Y_Move >= 1 and white_Y_Move <= 8:
-                    flag = 1
+                whiteX = int(input("Input X:"))
+                if  whiteX >= 1 and whiteX <= 8:
+                    whiteY = int(input("Input Y:"))
+                    if  whiteY >= 1 and whiteY <= 8:
+                        flag = 1
+                    else:
+                        print("Oh oh there is no such coordinate")
                 else:
                     print("Oh oh there is no such coordinate")
             
             flag = 0
-
-            for figure in PlayerWhite.figures:
-                if figure[1] == white_Y_Move and figure[2] == white_X_Move:
-                    print(f"There is a figure on such coordinate: {figure[0]}")
-            else:
-                
-                rule_validate = rule_moving_pieces(white_figure_chosen, white_Y_Move, white_X_Move, Player_Black, PlayerWhite)
-
-                if rule_validate == 1:
-                    white_figure_chosen[1] = white_Y_Move
-                    white_figure_chosen[2] = white_X_Move
-                    Board(PlayerWhite, PlayerBlack)
-                else:
-                    print("Invalid move")
-        
-
-        # Player Black's move
-        print("Player Black, choose a figure:")
-        while flag != 1:
-            blackX = int(input("Input X:"))
-            if  blackX >= 1 and blackX <= 8:
-                flag = 1
-            else:
-                print("Oh no, there is no such coordinate")
-
-        flag = 0
-
-        while flag != 1:
-            blackY = int(input("Input Y:"))
-            if  blackY >= 1 and blackY <= 8:
-                flag = 1
-            else:
-                print("Oh no, there is no such coordinate")
-        
-        flag = 0
-        
-        blackFigures = Player_Black.figures
-        black_figure_chosen = None
-        for figure in blackFigures:
-            if figure[1] == blackY and figure[2] == blackX:
-                print(f"You chose: {figure[0]}")
-                black_figure_chosen = figure
-                break
-        
-        # Choose the place where to put the figure that was chosen
-        if not black_figure_chosen:
-            print("Oh no, there is no such figure")
-        else:
-            print("Player Black, choose a place to move this figure:")
-            while flag != 1:
-                black_X_Move = int(input("Input X:"))
-                if  black_X_Move >= 1 and black_X_Move <= 8:
-                    flag = 1
-                else:
-                    print("Oh no, there is no such coordinate")
-
-            flag = 0
-
-            while flag != 1:
-                black_Y_Move = int(input("Input Y:"))
-                if  black_Y_Move >= 1 and black_Y_Move <= 8:
-                    flag = 1
-                else:
-                    print("Oh no, there is no such coordinate")
             
-            flag = 0
-
-            for figure in PlayerBlack.figures:
-                if figure[1] == black_Y_Move and figure[2] == black_X_Move:
-                    print(f"There is a figure on this coordinate: {figure[0]}")
+            whiteFigures = Player_White.figures
+            white_figure_chosen = None
+            for figure in whiteFigures:
+                if figure[1] == whiteY and figure[2] == whiteX:
+                    print(f"You chose: {figure[0]}")
+                    white_figure_chosen = figure
                     break
-            else:
-                # Validate move and execute
-                rule_validate = rule_moving_pieces(black_figure_chosen, black_Y_Move, black_X_Move, PlayerWhite, PlayerBlack)
+            
 
-                if rule_validate == 1:
-                    black_figure_chosen[1] = black_Y_Move
-                    black_figure_chosen[2] = black_X_Move
-                    Board(PlayerWhite, PlayerBlack)
+            #Choose the place where to put the figure that was chosen
+            if not white_figure_chosen:
+                print("Oh no there is no such figure")
+            else:
+                print("Player White chose a place to put this figure:")
+                while flag != 1:
+                    white_X_Move = int(input("Input X:"))
+                    if  white_X_Move >= 1 and white_X_Move <= 8:
+                        white_Y_Move = int(input("Input Y:"))
+                        if  white_Y_Move >= 1 and white_Y_Move <= 8:
+                            flag = 1
+                        else:
+                            print("Oh oh there is no such coordinate")
+                    else:
+                        print("Oh oh there is no such coordinate")
+                
+                flag = 0
+
+                for figure in PlayerWhite.figures:
+                    if figure[1] == white_Y_Move and figure[2] == white_X_Move:
+                        print(f"There is a figure on such coordinate: {figure[0]}")
                 else:
-                    print("Invalid move")
+                    
+                    rule_validate = rule_moving_pieces(white_figure_chosen, white_Y_Move, white_X_Move, Player_Black, PlayerWhite)
+
+                    if rule_validate == 1:
+                        white_figure_chosen[1] = white_Y_Move
+                        white_figure_chosen[2] = white_X_Move
+                        Board(PlayerWhite, PlayerBlack)
+                        flag_player_white = 1
+                    else:
+                        print("Invalid move")
+        
+
+        # Player BLACK move
+        while flag_player_black != 1:
+            print("Player Black, choose a figure:")
+            while flag != 1:
+                blackX = int(input("Input X:"))
+                if  blackX >= 1 and blackX <= 8:
+                    blackY = int(input("Input Y:"))
+                    if  blackY >= 1 and blackY <= 8:
+                        flag = 1
+                    else:
+                        print("Oh no, there is no such coordinate")
+                else:
+                    print("Oh no, there is no such coordinate")
+            
+            flag = 0
+            
+            blackFigures = Player_Black.figures
+            black_figure_chosen = None
+            for figure in blackFigures:
+                if figure[1] == blackY and figure[2] == blackX:
+                    print(f"You chose: {figure[0]}")
+                    black_figure_chosen = figure
+                    break
+            
+            # Choose the place where to put the figure that was chosen
+            if not black_figure_chosen:
+                print("Oh no, there is no such figure")
+            else:
+                print("Player Black, choose a place to move this figure:")
+                while flag != 1:
+                    black_X_Move = int(input("Input X:"))
+                    if  black_X_Move >= 1 and black_X_Move <= 8:
+                        black_Y_Move = int(input("Input Y:"))
+                        if  black_Y_Move >= 1 and black_Y_Move <= 8:
+                            flag = 1
+                        else:
+                            print("Oh no, there is no such coordinate")
+                    else:
+                        print("Oh no, there is no such coordinate")
+
+                
+                flag = 0
+
+                for figure in PlayerBlack.figures:
+                    if figure[1] == black_Y_Move and figure[2] == black_X_Move:
+                        print(f"There is a figure on this coordinate: {figure[0]}")
+                        break
+                else:
+                    # Validate move and execute
+                    rule_validate = rule_moving_pieces(black_figure_chosen, black_Y_Move, black_X_Move, PlayerWhite, PlayerBlack)
+
+                    if rule_validate == 1:
+                        black_figure_chosen[1] = black_Y_Move
+                        black_figure_chosen[2] = black_X_Move
+                        Board(PlayerWhite, PlayerBlack)
+                        flag_player_black = 1
+                    else:
+                        print("Invalid move")
         
 
 main()

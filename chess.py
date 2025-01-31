@@ -27,6 +27,24 @@ def rule_moving_pieces(figure_chosen, new_y, new_x, opponent_player, temmate_pla
         # Regular forward move (1 step)
         if result_y == direction and result_x == 0 and opponent_flag == 0:
             figure_chosen[4] += 1
+
+            #If PAWN located at the end of the board it can be promoted
+            if (figure_chosen[0] == 'PW' and new_y == 8) or (figure_chosen[0] == 'PB' and new_y == 1):
+                print("You can promote your pawn to a Queen, Rook, Bishop, or Knight.")
+                promotion_choice = input("Choose a piece (Q, R, B, k): ").upper()
+                if promotion_choice == 'Q':
+                    figure_chosen[0] = 'Q' + figure_chosen[0][1]   # Change the pawn to a Queen
+                    figure_chosen[3] = 9
+                elif promotion_choice in ['R', 'B', 'k']:
+                    figure_chosen[0] = promotion_choice + figure_chosen[0][1]   # Change the pawn to a promotion_choice
+                    if promotion_choice == 'R':
+                        figure_chosen[3] = 5
+                        figure_chosen[4] = 0
+                    elif promotion_choice == 'B':
+                        figure_chosen[3] = 3
+                    elif promotion_choice == 'k':
+                        figure_chosen[3] = 3
+
             return 1  
 
         # First move (2 steps forward)
@@ -40,6 +58,23 @@ def rule_moving_pieces(figure_chosen, new_y, new_x, opponent_player, temmate_pla
             figure_chosen[4] += 1
             temmate_player.score += opponent_figure[3]
             opponent_figures.remove(opponent_figure)  # Remove captured piece
+
+            #If PAWN located at the end of the board it can be promoted
+            if (figure_chosen[0] == 'PW' and new_y == 8) or (figure_chosen[0] == 'PB' and new_y == 1):
+                print("You can promote your pawn to a Queen, Rook, Bishop, or Knight.")
+                promotion_choice = input("Choose a piece (Q, R, B, k): ").upper()
+                if promotion_choice == 'Q':
+                    figure_chosen[0] = 'Q' + figure_chosen[0][1]   # Change the pawn to a Queen
+                    figure_chosen[3] = 9
+                elif promotion_choice in ['R', 'B', 'k']:
+                    figure_chosen[0] = promotion_choice + figure_chosen[0][1]   # Change the pawn to a promotion_choice
+                    if promotion_choice == 'R':
+                        figure_chosen[3] = 5
+                        figure_chosen[4] = 0
+                    elif promotion_choice == 'B':
+                        figure_chosen[3] = 3
+                    elif promotion_choice == 'k':
+                        figure_chosen[3] = 3
             return 1  
 
     # ROOK movement rules
@@ -97,11 +132,13 @@ def rule_moving_pieces(figure_chosen, new_y, new_x, opponent_player, temmate_pla
         dy = abs(new_y - start_y) ** 2
 
         if dx + dy == 5:
-            return 1        # No need to check if there is an opponent on the way because KNIGHT jupm over oponent figures
-        
-        if opponent_flag == 1:
+            if opponent_flag == 1:
                 temmate_player.score += opponent_figure[3]
                 opponent_figures.remove(opponent_figure)  # Capture the piece
+
+            return 1        # No need to check if there is an opponent on the way because KNIGHT jupm over oponent figures
+        
+        
     
     # QUEEN movement rules
     elif figure_chosen[0] in ['QW', 'QB']:
